@@ -86,12 +86,14 @@ export function InventoryCard({ product, mode, index }: InventoryCardProps) {
               </h3>
               <span
                 className={`flex-shrink-0 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-lg ${
-                  product.status === "published"
+                  product.needs_review
+                    ? "bg-amber-100 text-amber-700 border border-amber-200"
+                    : product.status === "published"
                     ? "bg-secondary/10 text-secondary"
                     : "bg-muted/10 text-muted"
                 }`}
               >
-                {product.status === "published" ? "Publicada" : "Borrador"}
+                {product.needs_review ? "Revisión Pendiente" : product.status === "published" ? "Publicada" : "Borrador"}
               </span>
             </div>
 
@@ -152,12 +154,14 @@ export function InventoryCard({ product, mode, index }: InventoryCardProps) {
         <div className="absolute top-3 right-3">
           <span
             className={`px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-lg backdrop-blur-sm ${
-              product.status === "published"
+              product.needs_review
+                ? "bg-amber-500 text-white shadow-sm"
+                : product.status === "published"
                 ? "bg-secondary/80 text-white"
                 : "bg-white/80 text-muted"
             }`}
           >
-            {product.status === "published" ? "Publicada" : "Borrador"}
+            {product.needs_review ? "⚠ Revisión" : product.status === "published" ? "Publicada" : "Borrador"}
           </span>
         </div>
       </div>
@@ -182,7 +186,14 @@ export function InventoryCard({ product, mode, index }: InventoryCardProps) {
           {product.materials && (
             <div className="flex items-start gap-2">
               <Hammer className="w-3.5 h-3.5 text-primary mt-1 flex-shrink-0" />
-              <MaterialTags materials={product.materials} />
+              <div className="space-y-1.5 flex-1">
+                <MaterialTags materials={product.materials} />
+                {product.visual_evidence && (
+                  <p className="text-[10px] text-muted italic leading-tight">
+                    Evidencia: {product.visual_evidence}
+                  </p>
+                )}
+              </div>
             </div>
           )}
 

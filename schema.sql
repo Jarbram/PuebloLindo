@@ -7,7 +7,10 @@ create table if not exists products (
   materials text,
   image_url text, -- For temporary preview or storage URL
   artisan_name text, -- Optional for this MVP
-  status text default 'published' -- draft, published
+  status text default 'published', -- draft, published
+  needs_review boolean default false, -- Escalation to human
+  ai_confidence numeric, -- 0 to 1 score
+  visual_evidence text -- Evidence cited by AI to prevent hallucinations
 );
 
 -- Enable RLS

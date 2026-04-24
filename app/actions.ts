@@ -8,6 +8,9 @@ export type ProductData = {
   title: string;
   description: string;
   materials: string;
+  ai_confidence: number;
+  visual_evidence: string;
+  needs_review: boolean;
 };
 
 export type Product = ProductData & {
@@ -79,8 +82,11 @@ export async function analyzeImage(base64Image: string): Promise<ProductData> {
           - "title": Atractivo, poético y descriptivo.
           - "description": Una historia breve (2-3 párrafos) que resalte el valor cultural, la técnica ancestral utilizada y el sentimiento de la pieza.
           - "materials": Identifica los materiales naturales específicos detectados.
+          - "ai_confidence": Un número entre 0 y 1 indicando qué tan seguro estás del análisis.
+          - "visual_evidence": Una frase breve que explique QUÉ viste en la imagen que confirma los materiales y la técnica (ej. "textura porosa granular típica del barro rojo" o "patrón de urdimbre manual").
+          - "needs_review": Un booleano. Debe ser true si la imagen es borrosa, ambigua, la confianza es menor a 0.8, o si NO puedes identificar la técnica con certeza absoluta.
           
-          Sé específico según la técnica (ej. si es textil, menciona el tipo de telar si es evidente; si es cerámica, el tipo de quemado). Usa un tono cálido, respetuoso y profesional.`,
+          REGLA CRUCIAL: No inventes información. Si no puedes ver un detalle, di que no es claro en la descripción y marca needs_review: true. Usa un tono cálido y profesional.`,
         },
         {
           role: "user",
@@ -144,6 +150,9 @@ export async function saveProduct(data: ProductData & { image_url?: string }) {
         description: data.description.trim(),
         materials: data.materials.trim(),
         image_url: data.image_url,
+        ai_confidence: data.ai_confidence,
+        visual_evidence: data.visual_evidence,
+        needs_review: data.needs_review,
       },
     ])
     .select();

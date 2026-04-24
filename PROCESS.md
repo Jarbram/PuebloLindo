@@ -100,3 +100,25 @@ Si tuviera que elegir **una sola mejora**, sería el **procesamiento batch con c
 ## Resumen
 
 > El desarrollo fue un diálogo constante con la IA. Los mejores resultados vinieron cuando le daba contexto rico y objetivos específicos. Los peores, cuando le pedía cosas vagas como "haz que se vea bonito". Cambié de enfoque 3 veces — siempre hacia más simplicidad para el usuario final. Si tuviera más tiempo, el procesamiento batch y la autenticación serían mis primeros dos sprints.
+
+---
+
+## 4. Robustez y Visión a Futuro
+
+### ⛓️ Escalamiento Humano (Human-in-the-loop)
+El sistema ha evolucionado para detectar sus propias limitaciones. No todas las imágenes son perfectas; a veces el ángulo es difícil o la iluminación oculta detalles críticos.
+- **Detección de Incertidumbre**: El prompt del sistema ahora obliga a la IA a evaluar su propia confianza (`ai_confidence`). Si el modelo detecta ambigüedad (score < 0.8), marca automáticamente la pieza con `needs_review: true`.
+- **Flujo Curatorial**: En el inventario, estas piezas se destacan con una insignia de **"Revisión Pendiente"**. Esto permite que un experto humano verifique los datos generados por la IA, asegurando que el catálogo final mantenga los estándares de calidad de PuebloLindo.
+
+### 🚫 Verificación Anti-Alucinación
+Uno de los mayores riesgos de la IA generativa es la "alucinación" de detalles. Para mitigar esto, implementamos una estrategia de **Evidencia Visual**:
+- **Cita de Evidencia**: La IA debe completar un campo `visual_evidence` explicando qué elemento específico de la imagen justifica cada material y técnica mencionada (ej: *"textura porosa granular típica del barro negro"*).
+- **Control de Inventiva**: El sistema tiene instrucciones estrictas de marcar `needs_review` si no puede ver pistas visuales claras, en lugar de intentar adivinar. Esto garantiza que cada descripción esté fundamentada en hechos visuales.
+
+### 📈 Estrategia de Escalamiento 10x
+Si PuebloLindo escalara a miles de artesanos y piezas diarias, la arquitectura está preparada para crecer:
+1.  **Optimización Postgres (Supabase)**: Implementación de índices `GIN` y `B-Tree` en campos de búsqueda y confianza para mantener el inventario rápido con grandes volúmenes de datos.
+2.  **Procesamiento Asíncrono**: Uso de **Next.js After** para que el almacenamiento de la imagen y el análisis por IA ocurran en una tarea secundaria, liberando la interfaz del usuario inmediatamente.
+3.  **Monitoreo de Deriva (Drift Monitoring)**: Almacenar la confianza promedio de la IA para detectar si el rendimiento del modelo cambia con nuevas categorías de artesanías y ajustar los prompts proporcionalmente.
+4.  **Content Delivery Network (CDN)**: Optimización de imágenes mediante el CDN de Supabase para asegurar tiempos de carga rápidos en zonas rurales con baja conectividad.
+
