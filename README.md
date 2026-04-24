@@ -2,7 +2,7 @@
 
 > Sube una foto de tu artesanía y deja que la IA genere título, descripción y materiales automáticamente.
 
-**[🚀 Probar en vivo →](https://pueblolindo.vercel.app)**
+**[🚀 Probar en vivo →](https://pueblo-lindo-eight.vercel.app/)**
 
 ---
 
