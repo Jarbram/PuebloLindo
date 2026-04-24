@@ -26,9 +26,7 @@ La IA no escribió el proyecto de principio a fin de una vez. El desarrollo fue 
 
 | Prompt (resumido) | Qué falló y cómo lo corregí |
 |---|---|
-| *"Haz la página principal"* (sin más contexto) | Demasiado vago. La primera iteración generó un landing genérico. Tuve que ser específico: *"La página principal es el flujo de upload: botón de subir foto → estado de carga con animación → editor pre-llenado por IA → pantalla de éxito"*. Con ese nivel de detalle, el resultado fue preciso. |
 | *"Agrega manejo de errores"* | Sin especificar *dónde* ni *qué tipo* de errores, la IA agregó try-catch genéricos. Replanteé: *"En `analyzeImage`, maneja rate limits (429), API key inválida (401) y respuesta vacía del modelo con mensajes en español para el usuario"*. Ahí sí generó el error handling granular que necesitaba. |
-| *"Haz que se vea bonito"* | Imposible de ejecutar sin criterio estético concreto. Lo que funcionó fue: *"Usa un sistema de diseño con fondo crema (#F9F7F2), gradiente terracota para CTAs, tipografía serif para títulos, fuente sans-serif para body, y animaciones de entrada con fade-in"*. |
 
 ---
 
