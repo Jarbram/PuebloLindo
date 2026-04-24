@@ -4,6 +4,9 @@ import { Sparkles } from "lucide-react";
 import Link from "next/link";
 import type { Metadata } from "next";
 
+// Siempre obtener datos frescos de la base de datos
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Inventario | PuebloLindo",
   description:

@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { openai } from "@/lib/openai";
 import { supabase } from "@/lib/supabase";
 
@@ -162,6 +163,9 @@ export async function saveProduct(data: ProductData & { image_url?: string }) {
 
     throw new Error("No se pudo guardar la artesanía. Verifica tu conexión e intenta de nuevo.");
   }
+
+  // Revalidar la página de inventario para que muestre el nuevo producto
+  revalidatePath("/inventario");
 
   return result[0];
 }

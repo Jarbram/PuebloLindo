@@ -11,13 +11,17 @@ interface InventoryCardProps {
   index: number;
 }
 
+const MONTHS_SHORT = [
+  "ene", "feb", "mar", "abr", "may", "jun",
+  "jul", "ago", "sep", "oct", "nov", "dic",
+];
+
 function formatDate(dateStr: string): string {
   const d = new Date(dateStr);
-  return d.toLocaleDateString("es-MX", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  });
+  const day = d.getUTCDate();
+  const month = MONTHS_SHORT[d.getUTCMonth()];
+  const year = d.getUTCFullYear();
+  return `${day} ${month} ${year}`;
 }
 
 function MaterialTags({ materials }: { materials: string | null }) {
